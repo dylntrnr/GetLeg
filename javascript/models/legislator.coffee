@@ -8,16 +8,17 @@ class GetLeg.Models.Legislator extends Backbone.Model
 	# 	# long: -122.0845853
 	# 	# address: "916 South 1900 East SLC 84108"
 	# 	&callback=?
-	url: ->
-		"http://maps.googleapis.com/maps/api/geocode/json?address=" + @get('address') + "&sensor=false"
+	
 	parse: (json) ->
 		if !json.results then console.log "nothing was there" else
 			@set({ lat: json.results[0].geometry.location.lat })
 			@set({ long: json.results[0].geometry.location.lng })
-	initialize: ->
+	initialize: =>
 		@fetch
-			success: =>
-				legislators.add @
+			url: "http://maps.googleapis.com/maps/api/geocode/json?address=" + @get('address') + "&sensor=false&callback=?"
+			success: (data, s) =>
+				legislators.add s
+				# console.log s
 
 
 class GetLeg.Collections.LegislatorsCollection extends Backbone.Collection
