@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Awesome Legislators</title>
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" media="screen" href="/css/bootstrap.css" >
+    <script type="text/mustache" id="legislator-template">
+      <tr>
+        <td id="{{ id }}">{{ first_name }}</td>
+        <td id="{{ id }}">{{ last_name }}</td>
+        <td id="{{ id }}">{{ email }}</td>
+        <td><a href="#" class="thumbnail"><img src="{{ photo_url }}" alt="Legislators photo"></a></td>
+        
+      </tr>
+    </script>
+    <script type="text/javascript" src="/javascript/vendor/jquery.min.js"></script>
+    <script type="text/javascript" src="/javascript/vendor/underscore.min.js"></script>
+    <script type="text/javascript" src="/javascript/vendor/backbone.min.js"></script>
+    <script type="text/javascript" src="/javascript/vendor/backbone-validations.js"></script>
+    <script type="text/javascript "src="/javascript/vendor/hogan.js"></script>
+    <script type="text/javascript "src="/javascript/app.js"></script>
+    <script type="text/javascript "src="/javascript/models/legislator.js"></script>
+    <script type="text/javascript "src="/javascript/views/legislators.js"></script>
+    <script type="text/javascript "src="/javascript/views/address_form.js"></script>
+    <script type="text/javascript "src="/javascript/models/address_form.js"></script>
+  </head>
+  
+  <body>
+    <div class="container">
+      <div class="navbar">
+        <div class="navbar-inner">
+          <div class="container"><a class='brand' href="#">Get Legs from address</a></div>
+        </div>
+      </div>
+      <script type="text/javascript">
+        window.submitCall = false;
+          $(document).ready(function () {
+            legislators = new GetLeg.Collections.LegislatorsCollection();
+            legislators_view = new GetLeg.Views.LegislatorsView({
+              collection: legislators,
+              el: '#legislators tbody'
+            })
+            address_view = new GetLeg.Views.AddressForm({
+              el: 'form'
+            })
+          });
+      </script>
+      <div class="container">
+        <div class="row">
+          <div class="span4">
+            <form action="#" class='well form-horizontal' id='address-form'>
+              <div class="control-group">
+                <label for="user_address">Enter you Address here</label>
+                <input type="text" name="user[address]" id="user_address" placeholder="150 S 800 E SLC 84102">
+                <span class="help-block">Required</span>
+                <input type="button" class='btn btn-primary' value="Submit" id="Submit">
+              </div>              
+            </form>
+          </div>
+          <div class="span8">
+            <table class="table" id="legislators">
+              <thead>
+                <tr>
+                  <th>First name</th>
+                  <th>Last Name</th>
+                  <th>Email</th>
+                  <th>Photo</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
