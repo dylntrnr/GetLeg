@@ -13,27 +13,28 @@
       return Legislator.__super__.constructor.apply(this, arguments);
     }
 
-    Legislator.prototype.parse = function(json) {
-      if (!json.results) {
-        return console.log("nothing was there");
-      } else {
-        this.set({
-          lat: json.results[0].geometry.location.lat
-        });
-        return this.set({
-          long: json.results[0].geometry.location.lng
+    Legislator.prototype.initialize = function() {
+      var address, geocoder,
+        _this = this;
+      geocoder = new google.maps.Geocoder();
+      address = this.get('address');
+      if (geocoder) {
+        return geocoder.geocode({
+          'address': address
+        }, function(results, status) {
+          if (status === google.maps.GeocoderStatus.OK) {
+            _this.set({
+              lat: results[0].geometry.location.Ya
+            });
+            _this.set({
+              long: results[0].geometry.location.Za
+            });
+            return legislators.add(_this);
+          } else {
+            return console.log("Geocoder failed: " + status);
+          }
         });
       }
-    };
-
-    Legislator.prototype.initialize = function() {
-      var _this = this;
-      return this.fetch({
-        url: "http://maps.googleapis.com/maps/api/geocode/json?address=" + this.get('address') + "&sensor=false",
-        success: function(data) {
-          return legislators.add(data);
-        }
-      });
     };
 
     return Legislator;

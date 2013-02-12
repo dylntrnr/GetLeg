@@ -9,17 +9,27 @@ class GetLeg.Models.Legislator extends Backbone.Model
 	# 	# address: "916 South 1900 East SLC 84108"
 	# 	&callback=?
 	
-	parse: (json) ->
-		if !json.results
-			console.log "nothing was there" 
-		else
-			@set({ lat: json.results[0].geometry.location.lat })
-			@set({ long: json.results[0].geometry.location.lng })
+	# parse: (json) ->
+	# 	if !json.results
+	# 		console.log "nothing was there" 
+	# 	else
+	# 		@set({ lat: json.results[0].geometry.location.lat })
+	# 		@set({ long: json.results[0].geometry.location.lng })
 	initialize: =>
-		@fetch
-			url: "http://maps.googleapis.com/maps/api/geocode/json?address=" + @get('address') + "&sensor=false"
-			success: (data) =>
-				legislators.add data
+		geocoder = new google.maps.Geocoder()
+		address = @get('address')
+		if geocoder
+			geocoder.geocode 'address': address, (results, status) =>
+				if status is google.maps.GeocoderStatus.OK
+					@set({ lat: results[0].geometry.location.Ya })
+					@set({ long: results[0].geometry.location.Za })
+					legislators.add @
+				else
+					console.log "Geocoder failed: " + status
+		# @fetch
+		# 	url: "http://maps.googleapis.com/maps/api/geocode/json?address=" + @get('address') + "&sensor=false"
+		# 	success: (data) =>
+		# 		legislators.add data
 
 
 class GetLeg.Collections.LegislatorsCollection extends Backbone.Collection
