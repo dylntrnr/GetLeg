@@ -11,15 +11,9 @@
     function LegislatorsView() {
       this.addLegislator = __bind(this.addLegislator, this);
 
-      this.removeLegislator = __bind(this.removeLegislator, this);
-
       this.render = __bind(this.render, this);
       return LegislatorsView.__super__.constructor.apply(this, arguments);
     }
-
-    LegislatorsView.prototype.events = {
-      'click .remove': 'removeLegislator'
-    };
 
     LegislatorsView.prototype.template = Hogan.compile($('#legislator-template').html());
 
@@ -42,13 +36,6 @@
       return _results;
     };
 
-    LegislatorsView.prototype.removeLegislator = function(evt) {
-      var id, model;
-      id = evt.target.id;
-      model = this.collection.get(id);
-      return this.collection.remove(model);
-    };
-
     LegislatorsView.prototype.addLegislator = function() {
       var model,
         _this = this;
@@ -59,14 +46,9 @@
         return this.collection.fetch({
           url: 'http://openstates.org/api/v1/legislators/geo/?long=' + model.attributes.long + '&lat=' + model.attributes.lat + '&apikey=c13dee9099be4512a8bca6ad4f94c4aa&callback=?',
           success: function(data, s) {
-            if (window.submitCall) {
-              window.submitCall = false;
-              legislators.reset();
-              legislators.add(s);
-              _this.render(_this.collection);
-            } else {
-              return console.log(window.submitCall);
-            }
+            legislators.reset();
+            legislators.add(s);
+            _this.render(_this.collection);
           }
         });
       }

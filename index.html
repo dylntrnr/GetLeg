@@ -25,7 +25,6 @@
     <script type="text/javascript "src="./javascript/models/legislator.js"></script>
     <script type="text/javascript "src="./javascript/views/legislators.js"></script>
     <script type="text/javascript "src="./javascript/views/address_form.js"></script>
-    <script type="text/javascript "src="./javascript/models/address_form.js"></script>
   </head>
   
   <body>
@@ -46,7 +45,6 @@
               }
               });
           });
-        window.submitCall = false;
           $(document).ready(function () {
             legislators = new GetLeg.Collections.LegislatorsCollection();
             legislators_view = new GetLeg.Views.LegislatorsView({

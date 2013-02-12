@@ -17,7 +17,6 @@
 
     AddressForm.prototype.createNewModel = function() {
       var test, userAddress;
-      window.submitCall = true;
       legislators.reset();
       userAddress = $('#user_address').val();
       return test = new GetLeg.Models.Legislator({
