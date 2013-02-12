@@ -10,15 +10,16 @@ class GetLeg.Models.Legislator extends Backbone.Model
 	# 	&callback=?
 	
 	parse: (json) ->
-		if !json.results then console.log "nothing was there" else
+		if !json.results
+			console.log "nothing was there" 
+		else
 			@set({ lat: json.results[0].geometry.location.lat })
 			@set({ long: json.results[0].geometry.location.lng })
 	initialize: =>
 		@fetch
-			url: "http://maps.googleapis.com/maps/api/geocode/json?address=" + @get('address') + "&sensor=false&callback=?"
-			success: (data, s) =>
-				legislators.add s
-				# console.log s
+			url: "http://maps.googleapis.com/maps/api/geocode/json?address=" + @get('address') + "&sensor=false"
+			success: (data) =>
+				legislators.add data
 
 
 class GetLeg.Collections.LegislatorsCollection extends Backbone.Collection

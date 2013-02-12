@@ -29,9 +29,9 @@
     Legislator.prototype.initialize = function() {
       var _this = this;
       return this.fetch({
-        url: "http://maps.googleapis.com/maps/api/geocode/json?address=" + this.get('address') + "&sensor=false&callback=?",
-        success: function(data, s) {
-          return legislators.add(s);
+        url: "http://maps.googleapis.com/maps/api/geocode/json?address=" + this.get('address') + "&sensor=false",
+        success: function(data) {
+          return legislators.add(data);
         }
       });
     };
